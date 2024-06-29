@@ -32,8 +32,8 @@ CREATE DATABASE IF NOT EXISTS `intranet` DEFAULT CHARACTER SET utf8mb4 COLLATE u
 -- Structure de la table `pieces`
 --
 
-DROP TABLE IF EXISTS `pieces`;
-CREATE TABLE IF NOT EXISTS `pieces` (
+DROP TABLE IF EXISTS intranet.pieces;
+CREATE TABLE IF NOT EXISTS intranet.pieces (
   `numeroPiece` int(11) NOT NULL AUTO_INCREMENT,
   `nomPiece` varchar(50) NOT NULL,
   PRIMARY KEY (`numeroPiece`)
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `pieces` (
 -- Déchargement des données de la table `pieces`
 --
 
-INSERT INTO `pieces` (`numeroPiece`, `nomPiece`) VALUES
+INSERT INTO intranet.pieces(`numeroPiece`, `nomPiece`) VALUES
 (1, 'Cale de shape'),
 (2, 'Support detecteur securite PR'),
 (3, 'Module d\'équilibrage'),
@@ -73,8 +73,8 @@ INSERT INTO `pieces` (`numeroPiece`, `nomPiece`) VALUES
 -- Structure de la table `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
+DROP TABLE IF EXISTS intranet.users;
+CREATE TABLE IF NOT EXISTS intranet.users(
   `idUser` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `password` varchar(80) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`idUser`, `username`, `password`) VALUES
+INSERT INTO intranet.users(`idUser`, `username`, `password`) VALUES
 (2, 'root', '$2y$10$b3PJNk5ShS2XKRhNSFVCUeC1SRLnG9Xk9GI/usSsOX5Z3M2Ofbvoa'),
 (3, 'fcannan', '$2y$10$8L75Zqj.DS/K8tmwSMgv3.5Cf/zCOLg6xB04e/2Oay4iA0rXUFT/K');
 COMMIT;
