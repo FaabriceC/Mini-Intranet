@@ -20,7 +20,7 @@
 
     <footer>
         <p>&copy Fabrice CANNAN - Mini-Intranet - 2024</p>
-        <a href="https://www.linkedin.com/in/fabrice-cannan/" target="__blank"><img src="img/linkedin.png" alt=""></a>
+        <a href="https://www.linkedin.com/in/fabrice-cannan/" target="__blank"><img src="img/linkedin.png" alt="LinkedIn"></a>
     </footer>
 </body>
 </html>

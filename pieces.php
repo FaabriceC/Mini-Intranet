@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 include 'database.php';
@@ -9,25 +10,16 @@ if (!isset($_SESSION['loggedin'])) {
     exit();
 }
 
-
 $username = $_SESSION['username'];
 
-// Récupération des données des pièces depuis la base de données
-$req = $bdd->query("SELECT numeroPiece, nomPiece FROM pieces");
+// Requête préparer pour afficher toutes les pièces de la BDD.
+$req = $bdd->prepare("SELECT numeroPiece, nomPiece FROM pieces");
+$req->execute();
+
 $pieces = [];
 
+$pieces = $req->fetchAll();
 
-// Vérifier si des pièces ont été trouvées dans la base de données
-if ($req->num_rows > 0) {
-
-    // Parcourir chaque ligne de résultat et stocker les pièces dans un tableau
-    while ($row = $req->fetch_assoc()) {
-        $pieces[] = $row;
-    }
-}
-
-
-$bdd->close();
 ?>
 
 <!DOCTYPE html>
@@ -37,34 +29,30 @@ $bdd->close();
     <title>Rechercher une pièce</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="img/logo.jpg">
-
 </head>
 <body>
     <div class="box">
         <h2><span id="lettre">E</span>ntrez le n° ou nom de la pièce</h2>
 
-        <p>Vous êtes connecté en tant que <?php echo $username?>.</p>
-        <form>
-            <input type="text" id="search" name="search" placeholder="Rechercher une pièce" autocomplete="off">
-        </form>
+        <p>Vous êtes connecté en tant que <?php echo $username; ?>.</p>
+        <div class="recherche-container">
+                <input type="text" id="recherche" name="recherche" placeholder="Rechercher une pièce" autocomplete="off">
+                <input type="text" id="suggestion" disabled>
+        </div>
         <div id="contenueListe"></div>
-        <a href="#"><button id="rechercher" type="button">Rechercher</button></a>
+        <a href="index.php"><img src="img/accueil.png" alt="Accueil" class="accueil"></a>
     </div>
 
-
-
     <footer>
-        <p>&copy Fabrice CANNAN - Mini-Intranet - 2024</p>
-        <a href="https://www.linkedin.com/in/fabrice-cannan/" target="__blank"><img src="img/linkedin.png" alt=""></a>
+        <p>&copy; Fabrice CANNAN - Mini-Intranet - 2024</p>
+        <a href="https://www.linkedin.com/in/fabrice-cannan/" target="_blank"><img src="img/linkedin.png" alt="LinkedIn"></a>
     </footer>
 
-    <!-- Ce script permet de transmettre les données des pièces au format JSON au JavaScript. -->
-
+    <!-- Ce script permet de transmettre les données des pièces au format JSON vers JavaScript. -->
     <script>
         let pieces = <?php echo json_encode($pieces); ?>;
     </script>
 
     <script src="js/script.js"></script>
-
 </body>
 </html>

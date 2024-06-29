@@ -1,43 +1,48 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('search');
-    const liste = document.getElementById('contenueListe');
+    const champRecherche = document.getElementById('recherche');
+    const conteneurListe = document.getElementById('contenueListe');
+    const suggestion = document.getElementById('suggestion');
 
-    searchInput.addEventListener('input', function() {
-        const searchTerm = searchInput.value.trim().toLowerCase();
-        liste.innerHTML = '';
 
-        if (searchTerm.length >= 1) {
-            const filteredPieces = pieces.filter(piece => 
-                piece.numeroPiece.toLowerCase().includes(searchTerm) || 
-                piece.nomPiece.toLowerCase().includes(searchTerm)
-            );
+    // Listener pour écouter les modifications dans le champ de recherche.
+    champRecherche.addEventListener('input', function() {
+        const termeRecherche = champRecherche.value.trim().toLowerCase();
+        conteneurListe.innerHTML = '';
+        suggestion.value = '';
 
-            if (filteredPieces.length > 0) {
-                const selectElement = document.createElement('select');
-                selectElement.id = 'results';
-                selectElement.className = 'listeItems';
-                selectElement.size = 6;
 
-                // Création des options pour la liste déroulante
-                filteredPieces.forEach(piece => {
+        // Récupère seulement les pièces avec les lettre de 'termeRecherche'.
+        if (termeRecherche.length >= 1) {
+            const piecesFiltrees = pieces.filter(piece => piece.numeroPiece.toString().includes(termeRecherche) || piece.nomPiece.toLowerCase().includes(termeRecherche)
+        );
+
+
+            // Vérifie qu'il y a au moins une pièce.
+            if (piecesFiltrees.length > 0) {
+
+                // Créer un élément 'select' pour afficher les résultats.
+                suggestion.value = `${piecesFiltrees[0].numeroPiece} - ${piecesFiltrees[0].nomPiece}`;
+                const resultatsListe = document.createElement('select');
+                resultatsListe.className = 'listeItems';
+                resultatsListe.size = 6;
+
+
+                // Ajout des pièces dans les options.
+                piecesFiltrees.forEach(piece => {
                     const option = document.createElement('option');
                     option.textContent = `${piece.numeroPiece} - ${piece.nomPiece}`;
-                    option.value = `${piece.numeroPiece} - ${piece.nomPiece}`; // Valeur complète de l'option
-                    selectElement.appendChild(option);
+                    resultatsListe.appendChild(option);
                 });
 
-                liste.appendChild(selectElement);
+                conteneurListe.appendChild(resultatsListe);
 
-                // Ajout d'un gestionnaire d'événements 'click' aux options de la liste déroulante
-                selectElement.addEventListener('click', function(event) {
-                    if (event.target.tagName === 'OPTION') {
-                        searchInput.value = event.target.value; // Met à jour le champ de recherche avec la valeur complète de l'option cliquée
-                        selectElement.style.display = 'none'; // Masque la liste déroulante après avoir sélectionné une option
-                    }
+                // Listener pour écouter le "clique" et remplir le champ de texte.
+                resultatsListe.addEventListener('click', function(event) {
+                    champRecherche.value = event.target.textContent;
+                    resultatsListe.style.display = 'none';
+                    suggestion.value = '';
                 });
             }
         }
     });
-
-
 });
