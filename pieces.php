@@ -19,7 +19,6 @@ $req->execute();
 $pieces = [];
 
 $pieces = $req->fetchAll();
-
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,7 @@ $pieces = $req->fetchAll();
                 <input type="text" id="suggestion" disabled>
         </div>
         <div id="contenueListe"></div>
-        <a href="index.php"><img src="img/accueil.png" alt="Accueil" class="accueil"></a>
+        <a href="logout.php"><img src="img/accueil.png" alt="Accueil" class="accueil"></a>
     </div>
 
     <footer>
@@ -50,7 +49,7 @@ $pieces = $req->fetchAll();
 
     <!-- Ce script permet de transmettre les données des pièces au format JSON vers JavaScript. -->
     <script>
-        let pieces = <?php echo json_encode($pieces); ?>;
+        let pieces = <?php echo json_encode($pieces) ?>
     </script>
 
     <script src="js/script.js"></script>
